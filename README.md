@@ -1,29 +1,113 @@
-# ExpenseTracker (Java)
+# ExpenseTracker 
+A simple and efficient console-based Expense Tracker built using Core Java.
+This application allows users to add, view, save, and manage daily expenses using JSON file storage.
+It is lightweight, beginner-friendly, and demonstrates clean code architecture using Models + Services.
 
-This small Java project is set up without Maven/Gradle. It relies on the `lib/gson-2.10.jar` JAR for JSON handling and can be built with a JDK.
+---
 
-Goal: target Java 21 (latest LTS).
+#🚀 Features
 
-Prerequisites
-- Install JDK 21 (Eclipse Adoptium Temurin or similar).
-- Set `JAVA_HOME` to the JDK installation directory or ensure `javac`/`java` are on your PATH.
+➕ Add New Expense (title, amount, date)
 
-Quick steps (PowerShell):
+📄 View All Expenses
 
-1) Build
+💾 Auto-save to JSON file (expenses.json)
 
-```powershell
-.\build.ps1
-```
+📂 Loads previous expenses on startup
 
-2) Run
+🧱 Uses GSON Library for JSON parsing
 
-```powershell
-.\run.ps1
-```
+🧹 Clean OOP structure:
 
-Notes
-- The build script compiles all `.java` files with `--release 21` to ensure compatibility with Java 21.
-- If you prefer to use a build tool (Maven/Gradle), I can add `pom.xml` or `build.gradle` and migrate the project.
+Expense (Model)
 
-If you want, I can also attempt to install JDK 21 automatically (requires permission) or add a small `javac` wrapper to pick a local installed JDK. Let me know which you'd prefer.
+ExpenseService (Business Logic)
+
+FileService (Read/Write JSON)
+
+ExpenseTrackerApp (Main Console App)
+
+---
+
+#🛠️ Technologies Used
+| Component              | Description                          |
+| ---------------------- | ------------------------------------ |
+| **Java (Core Java)**   | Main programming language            |
+| **GSON 2.10.1**        | JSON serialization/deserialization   |
+| **Powershell Scripts** | For building and running the project |
+| **JSON**               | Data persistence                     |
+
+---
+
+#How to Run
+**1️⃣ Compile the Project (Manual Method)**
+javac -cp ".;lib/gson-2.10.1.jar" src/**/*.java -d out
+
+**2️⃣ Run the Project**
+java -cp "out;lib/gson-2.10.1.jar" ExpenseTrackerApp
+
+**▶️ Run Using Provided Scripts (Windows PowerShell)**
+Run directly
+./run.ps1
+
+Build project
+./build.ps1
+
+---
+
+#📘 How It Works
+ExpenseTrackerApp.java
+
+Handles menu display
+
+Takes user input
+
+Calls services to perform actions
+
+ExpenseService.java
+
+Manages list of expenses
+
+Add, fetch, manage expense operations
+
+FileService.java
+
+Reads expenses from expenses.json on startup
+
+Saves all expenses after updates
+
+Expense.java
+
+Model class with fields:
+
+title
+
+amount
+
+date
+
+---
+
+#📄 Sample JSON Output
+[
+  {
+    "title": "Groceries",
+    "amount": 450.50,
+    "date": "2025-11-26"
+  }
+]
+
+---
+
+
+🧪 Future Enhancements
+
+📊 Monthly/Yearly summary reports
+
+📈 Expense filtering
+
+🔍 Search expenses
+
+💻 GUI version using JavaFX/Swing
+
+☁️ Cloud-based storage option

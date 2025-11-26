@@ -40,6 +40,7 @@ ExpenseTrackerApp (Main Console App)
 ---
 
 #How to Run
+
 **1️⃣ Compile the Project (Manual Method)**
 javac -cp ".;lib/gson-2.10.1.jar" src/**/*.java -d out
 
@@ -111,3 +112,4 @@ date
 💻 GUI version using JavaFX/Swing
 
 ☁️ Cloud-based storage option
+

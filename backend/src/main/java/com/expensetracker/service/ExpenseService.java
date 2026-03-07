@@ -80,24 +80,28 @@ public class ExpenseService {
 
     public DashboardSummary getDashboardSummary() {
 
-    List<Expense> list = repo.findAll();
+    List<Expense> expenses = repo.findAll();
 
-    double income = list.stream()
-        .filter(e -> "INCOME"
-        .equalsIgnoreCase(e.getType().getTypeName()))
-        .mapToDouble(Expense::getAmount)
-        .sum();
+    double totalIncome = 0;
+    double totalExpense = 0;
 
-   
-    double expense = list.stream()
-        .filter(e -> "EXPENSE"
-        .equalsIgnoreCase(e.getType().getTypeName()))
-        .mapToDouble(Expense::getAmount)
-        .sum();
-        
-    double balance = income - expense;
+    for (Expense e : expenses) {
 
-    return new DashboardSummary(income, expense, balance);
+        if (e.getType() != null && e.getType().getTypeName() != null) {
+
+            if (e.getType().getTypeName().equalsIgnoreCase("INCOME")) {
+                totalIncome += e.getAmount();
+            }
+
+            if (e.getType().getTypeName().equalsIgnoreCase("EXPENSE")) {
+                totalExpense += e.getAmount();
+            }
+        }
+    }
+
+    double balance = totalIncome - totalExpense;
+
+    return new DashboardSummary(totalIncome, totalExpense, balance);
 }
 
 public Expense updateExpense(Long id, Expense updatedExpense) {

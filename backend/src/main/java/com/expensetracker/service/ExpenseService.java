@@ -5,8 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.expensetracker.model.Category;
 import com.expensetracker.model.DashboardSummary;
 import com.expensetracker.model.Expense;
+import com.expensetracker.model.Type;
+
+import com.expensetracker.repository.CategoryRepository;
+import com.expensetracker.repository.TypeRepository;
 import com.expensetracker.repository.ExpenseRepository;
 
 @Service

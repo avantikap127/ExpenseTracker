@@ -13,6 +13,8 @@ import com.expensetracker.model.Type;
 import com.expensetracker.repository.CategoryRepository;
 import com.expensetracker.repository.TypeRepository;
 import com.expensetracker.repository.ExpenseRepository;
+import com.expensetracker.model.User;
+import com.expensetracker.repository.UserRepository;
 
 @Service
 public class ExpenseService {

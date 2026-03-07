@@ -21,7 +21,7 @@ import com.expensetracker.service.ExpenseService;
 
 @RestController
 @RequestMapping("/api/expenses")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://expense-tracker-wheat-theta.vercel.app")
 public class ExpenseController {
 
     @Autowired

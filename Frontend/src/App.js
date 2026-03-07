@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import "./App.css";
 
-function App() {
+function App(){
 
-  const [loggedIn, setLoggedIn] = useState(
-    localStorage.getItem("token") !== null
-  );
+const [loggedIn,setLoggedIn] = useState(
+localStorage.getItem("token") !== null
+);
 
-  if (!loggedIn) {
-    return <Login setLoggedIn={setLoggedIn} />;
-  }
+const [showLogin,setShowLogin] = useState(true);
 
-  return <Dashboard />;
+if(!loggedIn){
+
+return showLogin ?
+<Login setLoggedIn={setLoggedIn} setShowLogin={setShowLogin}/>
+:
+<Register setShowLogin={setShowLogin}/>
+
+}
+
+return <Dashboard/>
+
 }
 
 export default App;
+
+

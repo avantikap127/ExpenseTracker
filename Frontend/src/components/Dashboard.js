@@ -27,20 +27,26 @@ function Dashboard() {
     date: "",
     type: ""
   });
+const token = localStorage.getItem("token");
 
+const config = {
+  headers: {
+    Authorization: "Bearer " + token
+  }
+};
   useEffect(() => {
     loadDashboard();
     loadExpenses();
   }, []);
 
   const loadDashboard = () => {
-    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses/dashboard")
+    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses/dashboard", config)
       .then(res => setSummary(res.data))
       .catch(err => console.log(err));
   };
 
   const loadExpenses = () => {
-    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses")
+    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses", config)
       .then(res => setExpenses(res.data))
       .catch(err => console.log(err));
   };
@@ -50,14 +56,14 @@ function Dashboard() {
     if (!categoryFilter) return;
 
     axios
-      .get(`https://expensetracker-production-7732.up.railway.app/api/expenses/category/${categoryFilter}`)
+      .get(`https://expensetracker-production-7732.up.railway.app/api/expenses/category/${categoryFilter}`, config)
       .then(res => setFilteredExpenses(res.data))
       .catch(err => console.log(err));
   };
 
   const deleteExpense = (id) => {
 
-    axios.delete(`https://expensetracker-production-7732.up.railway.app/api/expenses/${id}`)
+    axios.delete(`https://expensetracker-production-7732.up.railway.app/api/expenses/${id}`, config)
       .then(() => {
         loadExpenses();
         loadDashboard();
@@ -79,7 +85,7 @@ function Dashboard() {
       date: form.date,
       category: { categoryId: Number(form.category) },
       type: { typeId: Number(form.type) }
-    })
+    }, config)
     .then(() => {
 
       setForm({
@@ -471,6 +477,7 @@ const tableStyle = {
 
 
 export default Dashboard;
+
 
 
 

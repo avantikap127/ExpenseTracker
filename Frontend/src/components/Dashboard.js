@@ -27,43 +27,80 @@ function Dashboard() {
     date: "",
     type: ""
   });
-const token = localStorage.getItem("token");
 
-const config = {
-  headers: {
-    Authorization: "Bearer " + token
-  }
-};
+  /* JWT TOKEN */
+
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  };
+
+  /* LOGOUT FUNCTION */
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   useEffect(() => {
+
+    if (!token) {
+      window.location.href = "/";
+      return;
+    }
+
     loadDashboard();
     loadExpenses();
+
   }, []);
 
+  /* LOAD DASHBOARD */
+
   const loadDashboard = () => {
-    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses/dashboard", config)
+    axios.get(
+      "https://expensetracker-production-7732.up.railway.app/api/expenses/dashboard",
+      config
+    )
       .then(res => setSummary(res.data))
       .catch(err => console.log(err));
   };
 
+  /* LOAD EXPENSES */
+
   const loadExpenses = () => {
-    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses", config)
+    axios.get(
+      "https://expensetracker-production-7732.up.railway.app/api/expenses",
+      config
+    )
       .then(res => setExpenses(res.data))
       .catch(err => console.log(err));
   };
+
+  /* FILTER BY CATEGORY */
 
   const filterByCategory = () => {
 
     if (!categoryFilter) return;
 
-    axios
-      .get(`https://expensetracker-production-7732.up.railway.app/api/expenses/category/${categoryFilter}`, config)
+    axios.get(
+      `https://expensetracker-production-7732.up.railway.app/api/expenses/category/${categoryFilter}`,
+      config
+    )
       .then(res => setFilteredExpenses(res.data))
       .catch(err => console.log(err));
   };
 
+  /* DELETE EXPENSE */
+
   const deleteExpense = (id) => {
 
-    axios.delete(`https://expensetracker-production-7732.up.railway.app/api/expenses/${id}`, config)
+    axios.delete(
+      `https://expensetracker-production-7732.up.railway.app/api/expenses/${id}`,
+      config
+    )
       .then(() => {
         loadExpenses();
         loadDashboard();
@@ -72,6 +109,8 @@ const config = {
       .catch(err => console.log(err));
   };
 
+  /* ADD TRANSACTION */
+
   const addTransaction = () => {
 
     if (!form.description || !form.amount || !form.category || !form.type) {
@@ -79,30 +118,34 @@ const config = {
       return;
     }
 
-    axios.post("https://expensetracker-production-7732.up.railway.app/api/expenses", {
-      description: form.description,
-      amount: Number(form.amount),
-      date: form.date,
-      category: { categoryId: Number(form.category) },
-      type: { typeId: Number(form.type) }
-    }, config)
-    .then(() => {
+    axios.post(
+      "https://expensetracker-production-7732.up.railway.app/api/expenses",
+      {
+        description: form.description,
+        amount: Number(form.amount),
+        date: form.date,
+        category: { categoryId: Number(form.category) },
+        type: { typeId: Number(form.type) }
+      },
+      config
+    )
+      .then(() => {
 
-      setForm({
-        description: "",
-        amount: "",
-        category: "",
-        date: "",
-        type: ""
+        setForm({
+          description: "",
+          amount: "",
+          category: "",
+          date: "",
+          type: ""
+        });
+
+        loadExpenses();
+        loadDashboard();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error adding transaction");
       });
-
-      loadExpenses();
-      loadDashboard();
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Error adding transaction");
-    });
   };
 
   const chartData = {
@@ -143,6 +186,10 @@ const config = {
 
         <button style={navButton} onClick={() => setSection("category")}>
           View By Category
+        </button>
+
+        <button style={navButton} onClick={logout}>
+          Logout
         </button>
 
       </div>
@@ -258,171 +305,120 @@ const config = {
 
         {/* VIEW EXPENSES */}
 
-       {section === "view" && (
+        {section === "view" && (
 
-  <div style={{ width: "900px", textAlign: "center" }}>
+          <div style={{ width: "900px", textAlign: "center" }}>
 
-    <h3>All Transactions</h3>
+            <h3>All Transactions</h3>
 
-    <table
-      style={{
-        width: "100%",
-        borderCollapse: "collapse",
-        marginTop: "20px",
-        textAlign: "center"
-      }}
-    >
+            <table style={tableStyle}>
 
-      <thead>
-        <tr style={{ background: "#f2f2f2" }}>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Description</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Amount</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Category</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Type</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Date</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Action</th>
-        </tr>
-      </thead>
+              <thead>
+                <tr style={{ background: "#f2f2f2" }}>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
 
-      <tbody>
+              <tbody>
 
-        {expenses.map(e => (
+                {expenses.map(e => (
 
-          <tr key={e.id}>
+                  <tr key={e.id}>
 
-            <td style={{ padding: "10px" }}>{e.description}</td>
+                    <td>{e.description}</td>
+                    <td>₹ {e.amount}</td>
+                    <td>{e.category?.categoryName}</td>
+                    <td>{e.type?.typeName}</td>
+                    <td>{e.date}</td>
 
-            <td style={{ padding: "10px" }}>
-              ₹ {e.amount}
-            </td>
+                    <td>
+                      <button
+                        style={deleteButton}
+                        onClick={() => deleteExpense(e.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
 
-            <td style={{ padding: "10px" }}>
-              {e.category?.categoryName}
-            </td>
+                  </tr>
 
-            <td style={{ padding: "10px" }}>
-              {e.type?.typeName}
-            </td>
+                ))}
 
-            <td style={{ padding: "10px" }}>
-              {e.date}
-            </td>
+              </tbody>
 
-            <td style={{ padding: "10px" }}>
-              <button
-                onClick={() => deleteExpense(e.id)}
-                style={{
-                  background: "red",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  cursor: "pointer"
-                }}
-              >
-                Delete
-              </button>
-            </td>
+            </table>
 
-          </tr>
+          </div>
 
-        ))}
+        )}
 
-      </tbody>
-
-    </table>
-
-  </div>
-
-)}
-        {/* VIEW BY CATEGORY */}
+        {/* FILTER BY CATEGORY */}
 
         {section === "category" && (
 
-  <div style={{ textAlign: "center", width: "900px" }}>
+          <div style={{ textAlign: "center", width: "900px" }}>
 
-    <h3>Filter Expenses</h3>
+            <h3>Filter Expenses</h3>
 
-    <select
-      style={{ padding: "8px", marginRight: "10px" }}
-      value={categoryFilter}
-      onChange={(e) => setCategoryFilter(e.target.value)}
-    >
-      <option value="">Select Category</option>
-      <option value="1">Food</option>
-      <option value="2">Shopping</option>
-      <option value="3">Travel</option>
-    </select>
+            <select
+              style={{ padding: "8px", marginRight: "10px" }}
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              <option value="">Select Category</option>
+              <option value="1">Food</option>
+              <option value="2">Shopping</option>
+              <option value="3">Travel</option>
+            </select>
 
-    <button
-      style={{
-        padding: "8px 16px",
-        background: "#1976d2",
-        color: "white",
-        border: "none",
-        cursor: "pointer",
-        borderRadius: "4px"
-      }}
-      onClick={filterByCategory}
-    >
-      View By Category
-    </button>
+            <button
+              style={actionButton}
+              onClick={filterByCategory}
+            >
+              View By Category
+            </button>
 
-    <h3 style={{ marginTop: "30px" }}>Transactions</h3>
+            <table style={{ ...tableStyle, marginTop: "30px" }}>
 
-    <table
-      style={{
-        width: "100%",
-        borderCollapse: "collapse",
-        marginTop: "20px",
-        textAlign: "center"
-      }}
-    >
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
 
-      <thead>
-        <tr style={{ background: "#f2f2f2" }}>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Description</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Amount</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Category</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Type</th>
-          <th style={{ padding: "12px", borderBottom: "1px solid #ccc" }}>Date</th>
-        </tr>
-      </thead>
+              <tbody>
 
-      <tbody>
+                {filteredExpenses.map(e => (
 
-        {filteredExpenses.map(e => (
+                  <tr key={e.id}>
 
-          <tr key={e.id}>
+                    <td>{e.description}</td>
+                    <td>₹ {e.amount}</td>
+                    <td>{e.category?.categoryName}</td>
+                    <td>{e.type?.typeName}</td>
+                    <td>{e.date}</td>
 
-            <td style={{ padding: "10px" }}>{e.description}</td>
+                  </tr>
 
-            <td style={{ padding: "10px" }}>
-              ₹ {e.amount}
-            </td>
+                ))}
 
-            <td style={{ padding: "10px" }}>
-              {e.category?.categoryName}
-            </td>
+              </tbody>
 
-            <td style={{ padding: "10px" }}>
-              {e.type?.typeName}
-            </td>
+            </table>
 
-            <td style={{ padding: "10px" }}>
-              {e.date}
-            </td>
+          </div>
 
-          </tr>
+        )}
 
-        ))}
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-)}
       </div>
 
     </div>
@@ -475,10 +471,4 @@ const tableStyle = {
   borderCollapse: "collapse"
 };
 
-
 export default Dashboard;
-
-
-
-
-

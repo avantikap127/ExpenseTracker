@@ -34,13 +34,13 @@ function Dashboard() {
   }, []);
 
   const loadDashboard = () => {
-    axios.get("https://expense-tracker-wheat-theta.vercel.app//api/expenses/dashboard")
+    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses/dashboard")
       .then(res => setSummary(res.data))
       .catch(err => console.log(err));
   };
 
   const loadExpenses = () => {
-    axios.get("https://expense-tracker-wheat-theta.vercel.app//api/expenses")
+    axios.get("https://expensetracker-production-7732.up.railway.app/api/expenses")
       .then(res => setExpenses(res.data))
       .catch(err => console.log(err));
   };
@@ -50,14 +50,14 @@ function Dashboard() {
     if (!categoryFilter) return;
 
     axios
-      .get(`https://expense-tracker-wheat-theta.vercel.app//api/expenses/category/${categoryFilter}`)
+      .get(`https://expensetracker-production-7732.up.railway.app/api/expenses/category/${categoryFilter}`)
       .then(res => setFilteredExpenses(res.data))
       .catch(err => console.log(err));
   };
 
   const deleteExpense = (id) => {
 
-    axios.delete(`https://expense-tracker-wheat-theta.vercel.app//api/expenses/${id}`)
+    axios.delete(`https://expensetracker-production-7732.up.railway.app/api/expenses/${id}`)
       .then(() => {
         loadExpenses();
         loadDashboard();
@@ -73,7 +73,7 @@ function Dashboard() {
       return;
     }
 
-    axios.post("https://expense-tracker-wheat-theta.vercel.app//api/expenses", {
+    axios.post("https://expensetracker-production-7732.up.railway.app/api/expenses", {
       description: form.description,
       amount: Number(form.amount),
       date: form.date,
@@ -471,4 +471,5 @@ const tableStyle = {
 
 
 export default Dashboard;
+
 

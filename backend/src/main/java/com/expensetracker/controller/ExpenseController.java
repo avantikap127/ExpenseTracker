@@ -28,14 +28,20 @@ public class ExpenseController {
     private ExpenseService service; // Spring injects ExpenseService object into Controller. service object is used to call methods defined in ExpenseService class.
 
     @PostMapping
-    public Expense addExpense(@RequestBody Expense expense) {
-        return service.addExpense(expense);
-    }
+    public Expense addExpense(@RequestBody Expense expense,
+                          @RequestHeader("Authorization") String token) {
 
-    @GetMapping
-    public List<Expense> getAll() {
-        return service.getAllExpenses();
-    }
+    String email = jwtUtil.extractEmail(token.substring(7));
+
+    return service.addExpense(expense,email);
+}
+   @GetMapping
+   public List<Expense> getAll(@RequestHeader("Authorization") String token) {
+
+   String email = jwtUtil.extractEmail(token.substring(7));
+
+   return service.getUserExpenses(email);
+}
     @GetMapping("/category/{id}")
     public List<Expense> byCategory(@PathVariable Long id) {
       return service.getByCategory(id);

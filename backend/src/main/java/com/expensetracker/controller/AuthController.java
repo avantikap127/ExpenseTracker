@@ -1,5 +1,7 @@
 package com.expensetracker.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,9 @@ public class AuthController {
     @Autowired
     private UserRepository repo;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return repo.save(user);
@@ -23,11 +28,11 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody User user) {
 
-        User existing = repo.findByEmail(user.getEmail());
+        Optional<User> existing = repo.findByEmail(user.getEmail());
 
-        if(existing != null && existing.getPassword().equals(user.getPassword())) {
+        if(existing.isPresent() && existing.get().getPassword().equals(user.getPassword())) {
 
-            return JwtUtil.generateToken(user.getEmail());
+            return jwtUtil.generateToken(existing.get().getEmail());
         }
 
         return "Invalid Credentials";

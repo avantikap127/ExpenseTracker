@@ -34,6 +34,9 @@ public class Expense {
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Type type; // INCOME or EXPENSE
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public Expense() {}
 

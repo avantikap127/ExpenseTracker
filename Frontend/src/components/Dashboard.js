@@ -218,8 +218,8 @@ function Dashboard() {
             >
               <option value="">Select Category</option>
               <option value="1">Food</option>
-              <option value="2">Travel</option>
-              <option value="3">Shopping</option>
+              <option value="2">Shopping</option>
+              <option value="3">Travel</option>
             </select>
 
             <input style={inputStyle}
@@ -471,6 +471,7 @@ const tableStyle = {
 
 
 export default Dashboard;
+
 
 
 

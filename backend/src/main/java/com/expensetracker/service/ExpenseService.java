@@ -16,7 +16,16 @@ public class ExpenseService {
     private ExpenseRepository repo;
 
     public Expense addExpense(Expense expense) {
-        return repo.save(expense);      //save(), findAll(), deleteById() are built-in methods provided by JpaRepository interface.These methods are CRUD operations provided by Spring Data JPA through JpaRepository. 
+        
+    Long categoryId = expense.getCategory().getCategoryId();
+    Long typeId = expense.getType().getTypeId();
+
+    Category category = categoryRepository.findById(categoryId).orElse(null);
+    Type type = typeRepository.findById(typeId).orElse(null);
+
+    expense.setCategory(category);
+    expense.setType(type);
+    return repo.save(expense);      //save(), findAll(), deleteById() are built-in methods provided by JpaRepository interface.These methods are CRUD operations provided by Spring Data JPA through JpaRepository. 
                 // The save() method is used to persist an entity (in this case, an Expense) to the database. It can be used for both creating new records and updating existing ones. When you call save() with an entity that has a null ID, it will create a new record in the database. If you call save() with an entity that has a non-null ID, it will update the existing record with that ID in the database. The findAll() method retrieves all records of the entity type from the database, returning them as a List. The deleteById() method deletes a record from the database based on its ID. These methods abstract away the underlying database operations, allowing you to perform CRUD operations without writing explicit SQL queries. 
         // Hibernate, as the JPA provider, converts these operations into SQL queries executed via JDBC.
     }   // so whatever sql queries hibernate creates when having all these methods, those sql queries are taken by jdbc to mysql  database so that jdbc driver executes those sql queries there and take the result and pass to hibernate, hibernate covert the result to entity object, then pass to repository then repository to service and then service to controller.  

@@ -34,13 +34,13 @@ function Dashboard() {
   }, []);
 
   const loadDashboard = () => {
-    axios.get("http://localhost:8080/api/expenses/dashboard")
+    axios.get("http://https://expense-tracker-wheat-theta.vercel.app//api/expenses/dashboard")
       .then(res => setSummary(res.data))
       .catch(err => console.log(err));
   };
 
   const loadExpenses = () => {
-    axios.get("http://localhost:8080/api/expenses")
+    axios.get("http://https://expense-tracker-wheat-theta.vercel.app//api/expenses")
       .then(res => setExpenses(res.data))
       .catch(err => console.log(err));
   };
@@ -50,14 +50,14 @@ function Dashboard() {
     if (!categoryFilter) return;
 
     axios
-      .get(`http://localhost:8080/api/expenses/category/${categoryFilter}`)
+      .get(`http://https://expense-tracker-wheat-theta.vercel.app//api/expenses/category/${categoryFilter}`)
       .then(res => setFilteredExpenses(res.data))
       .catch(err => console.log(err));
   };
 
   const deleteExpense = (id) => {
 
-    axios.delete(`http://localhost:8080/api/expenses/${id}`)
+    axios.delete(`http://https://expense-tracker-wheat-theta.vercel.app//api/expenses/${id}`)
       .then(() => {
         loadExpenses();
         loadDashboard();
@@ -73,7 +73,7 @@ function Dashboard() {
       return;
     }
 
-    axios.post("http://localhost:8080/api/expenses", {
+    axios.post("http://https://expense-tracker-wheat-theta.vercel.app//api/expenses", {
       description: form.description,
       amount: Number(form.amount),
       date: form.date,
@@ -468,5 +468,6 @@ const tableStyle = {
   width: "100%",
   borderCollapse: "collapse"
 };
+
 
 export default Dashboard;

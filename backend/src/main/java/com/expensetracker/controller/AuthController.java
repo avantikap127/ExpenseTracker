@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.expensetracker.model.User;
 import com.expensetracker.repository.UserRepository;
+import com.expensetracker.security.JwtUtil;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -16,7 +17,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public User register(@RequestBody User user) {
-
         return repo.save(user);
     }
 
@@ -26,7 +26,8 @@ public class AuthController {
         User existing = repo.findByEmail(user.getEmail());
 
         if(existing != null && existing.getPassword().equals(user.getPassword())) {
-            return "Login Successful";
+
+            return JwtUtil.generateToken(user.getEmail());
         }
 
         return "Invalid Credentials";

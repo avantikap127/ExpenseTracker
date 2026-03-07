@@ -70,5 +70,12 @@ public class Expense {
    public void setType(Type type) {
     this.type = type;
 }
+    public User getUser() {
+    return user;
+}
+
+public void setUser(User user) {
+    this.user = user;
+}
 
 }

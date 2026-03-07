@@ -11,7 +11,10 @@ import com.expensetracker.repository.ExpenseRepository;
 
 @Service
 public class ExpenseService {
-
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private TypeRepository typeRepository;
     @Autowired
     private ExpenseRepository repo;
 

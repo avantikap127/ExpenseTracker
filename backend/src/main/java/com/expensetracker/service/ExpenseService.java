@@ -121,6 +121,13 @@ public Expense updateExpense(Long id, Expense updatedExpense) {
 
     return repo.save(existing);
 }
+public List<Expense> getUserExpenses(String email){
+
+User user = userRepository.findByEmail(email).orElse(null);
+
+return repo.findByUser(user);
+
+}
 
 
 }

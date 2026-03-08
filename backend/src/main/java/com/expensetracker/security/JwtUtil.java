@@ -1,31 +1,29 @@
 package com.expensetracker.security;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-
-import java.security.Key;
+import org.springframework.stereotype.Component;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
+@Component
 public class JwtUtil {
 
-    private static final Key key =
-            Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final String SECRET = "Riddhiqwerty_mnbvcpoiu_zxasdf80324976251";
 
-    public static String generateToken(String email) {
+    public String generateToken(String email) {
 
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+86400000))
-                .signWith(key)
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
     }
 
-    public static String extractEmail(String token) {
+    public String extractEmail(String token) {
 
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
+        return Jwts.parser()
+                .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();

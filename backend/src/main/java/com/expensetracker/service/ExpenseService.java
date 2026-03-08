@@ -131,5 +131,81 @@ return repo.findByUser(user);
 
 }
 
+// USER EXPENSES BY CATEGORY
+public List<Expense> getUserExpensesByCategory(String email, Long categoryId){
+
+    User user = userRepository.findByEmail(email).orElse(null);
+
+    return repo.findByUserAndCategory_CategoryId(user, categoryId);
+}
+
+
+// DELETE USER EXPENSE
+public void deleteUserExpense(Long id, String email){
+
+    Expense expense = repo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+    repo.delete(expense);
+}
+
+
+// UPDATE USER EXPENSE
+public Expense updateUserExpense(Long id, Expense updatedExpense, String email){
+
+    Expense existing = repo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+    existing.setDescription(updatedExpense.getDescription());
+    existing.setAmount(updatedExpense.getAmount());
+    existing.setCategory(updatedExpense.getCategory());
+    existing.setDate(updatedExpense.getDate());
+    existing.setType(updatedExpense.getType());
+
+    return repo.save(existing);
+}
+
+
+// USER TOTAL EXPENSES
+public double getUserTotalExpenses(String email){
+
+    User user = userRepository.findByEmail(email).orElse(null);
+
+    List<Expense> expenses = repo.findByUser(user);
+
+    return expenses.stream()
+            .mapToDouble(Expense::getAmount)
+            .sum();
+}
+
+
+// USER DASHBOARD SUMMARY
+public DashboardSummary getUserDashboardSummary(String email){
+
+    List<Expense> expenses = getUserExpenses(email);
+
+    double totalIncome = 0;
+    double totalExpense = 0;
+
+    for(Expense e : expenses){
+
+        if(e.getType() != null && e.getType().getTypeName() != null){
+
+            if(e.getType().getTypeName().equalsIgnoreCase("INCOME")){
+                totalIncome += e.getAmount();
+            }
+
+            if(e.getType().getTypeName().equalsIgnoreCase("EXPENSE")){
+                totalExpense += e.getAmount();
+            }
+
+        }
+    }
+
+    double balance = totalIncome - totalExpense;
+
+    return new DashboardSummary(totalIncome, totalExpense, balance);
+}
+
 
 }

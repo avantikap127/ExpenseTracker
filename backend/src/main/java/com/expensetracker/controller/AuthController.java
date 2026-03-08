@@ -30,17 +30,18 @@ public class AuthController {
         return repo.save(user);
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
+  @PostMapping("/login")
+public String login(@RequestBody User user) {
 
-        User existing = repo.findByEmail(user.getEmail());
+    Optional<User> existingUser = repo.findByEmail(user.getEmail());
 
-        if(existing != null && passwordEncoder.matches(user.getPassword(), existing.getPassword())) {
+    if(existingUser.isPresent() &&
+       passwordEncoder.matches(user.getPassword(),
+                               existingUser.get().getPassword())) {
 
-            return jwtUtil.generateToken(existing.getEmail());
-
-        }
-
-        throw new RuntimeException("Invalid Email or Password");
+        return jwtUtil.generateToken(existingUser.get().getEmail());
     }
+
+    throw new RuntimeException("Invalid Email or Password");
+}
 }

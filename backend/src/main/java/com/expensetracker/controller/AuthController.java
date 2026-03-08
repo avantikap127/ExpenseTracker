@@ -28,14 +28,14 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody User user) {
 
-        Optional<User> existingUser = repo.findByEmail(user.getEmail());
+    Optional<User> existingUser = repo.findByEmail(user.getEmail());
 
-        if(existingUser.isPresent() && 
-           existingUser.get().getPassword().equals(user.getPassword())) {
+    if(existingUser.isPresent() &&
+       existingUser.get().getPassword().equals(user.getPassword())) {
 
-            return jwtUtil.generateToken(existingUser.get().getEmail());
-        }
-
-        throw new RuntimeException("Invalid Credentials");
+        return jwtUtil.generateToken(existingUser.get().getEmail());
     }
+
+    throw new RuntimeException("Invalid Email or Password");
+}
 }

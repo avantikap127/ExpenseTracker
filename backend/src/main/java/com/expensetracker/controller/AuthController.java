@@ -38,13 +38,13 @@ public String login(@RequestBody User user){
  Optional<User> existingUser = repo.findByEmail(user.getEmail());
 
  if(existingUser.isEmpty()){
-     return "User not found";
+     throw new RuntimeException("User not found");
  }
 
  User dbUser = existingUser.get();
 
  if(!passwordEncoder.matches(user.getPassword(), dbUser.getPassword())){
-     return "Invalid password";
+     throw new RuntimeException("Invalid password");
  }
 
  return jwtUtil.generateToken(dbUser.getEmail());

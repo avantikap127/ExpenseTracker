@@ -36,7 +36,8 @@ public class ExpenseController {
                           @RequestHeader("Authorization") String token) {
 
     String email = jwtUtil.extractEmail(token.substring(7));
-
+    User user = userRepository.findByEmail(email).orElse(null);
+    expense.setUser(user);
     return service.addExpense(expense,email);
 }
    @GetMapping

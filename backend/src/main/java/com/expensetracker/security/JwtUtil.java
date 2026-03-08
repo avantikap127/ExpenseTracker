@@ -21,4 +21,12 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String extractEmail(String token) {
+
+        return Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 }

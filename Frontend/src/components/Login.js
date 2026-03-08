@@ -6,16 +6,19 @@ function Login({ setLoggedIn, setShowLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginUser = () => {
+const loginUser = () => {
 
-    axios.post(
-      "https://expensetracker-production-7732.up.railway.app/api/auth/login",
-      {
-        email: email,
-        password: password
-      }
-    )
-    .then(res => {
+  axios.post(
+    "https://expensetracker-production-7732.up.railway.app/api/auth/login",
+    {
+      email: email,
+      password: password
+    }
+  )
+  .then(res => {
+
+    // Agar backend se token aaye tabhi login success
+    if(res.data.startsWith("eyJ")){
 
       localStorage.setItem("token", res.data);
 
@@ -23,12 +26,18 @@ function Login({ setLoggedIn, setShowLogin }) {
 
       setLoggedIn(true);
 
-    })
-    .catch(err => {
-      alert("Login Failed");
-    });
+    }else{
 
-  };
+      alert(res.data); // Invalid password / User not found
+
+    }
+
+  })
+  .catch(err => {
+    alert("Login Failed");
+  });
+
+};
 
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>

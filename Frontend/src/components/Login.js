@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function Login({ setLoggedIn }) {
+function Login({ setLoggedIn, setShowLogin }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +53,24 @@ function Login({ setLoggedIn }) {
       <button onClick={loginUser}>
         Login
       </button>
+
+      <br /><br />
+
+      {/* Create Account Button */}
+
+      <p>
+        New user?
+        <button
+          onClick={() => setShowLogin(false)}
+          style={{
+            marginLeft: "10px",
+            padding: "5px 10px",
+            cursor: "pointer"
+          }}
+        >
+          Create Account
+        </button>
+      </p>
 
     </div>
   );

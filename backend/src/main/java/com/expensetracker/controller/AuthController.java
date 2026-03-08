@@ -9,6 +9,8 @@ import com.expensetracker.security.JwtUtil;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins="*")
@@ -30,18 +32,17 @@ public class AuthController {
         return repo.save(user);
     }
 
-  @PostMapping("/login")
-public String login(@RequestBody User user) {
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
 
-    Optional<User> existingUser = repo.findByEmail(user.getEmail());
+        Optional<User> existingUser = repo.findByEmail(user.getEmail());
 
-    if(existingUser.isPresent() &&
-       passwordEncoder.matches(user.getPassword(),
-                               existingUser.get().getPassword())) {
+        if(existingUser.isPresent() &&
+           passwordEncoder.matches(user.getPassword(), existingUser.get().getPassword())) {
 
-        return jwtUtil.generateToken(existingUser.get().getEmail());
+            return jwtUtil.generateToken(existingUser.get().getEmail());
+        }
+
+        throw new RuntimeException("Invalid Email or Password");
     }
-
-    throw new RuntimeException("Invalid Email or Password");
-}
 }

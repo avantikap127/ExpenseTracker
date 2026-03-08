@@ -36,6 +36,6 @@ public class AuthController {
             return jwtUtil.generateToken(existingUser.get().getEmail());
         }
 
-        return "Invalid Credentials";
+        throw new RuntimeException("Invalid Credentials");
     }
 }

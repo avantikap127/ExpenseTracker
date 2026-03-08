@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.expensetracker.model.User;
 import com.expensetracker.repository.UserRepository;
 import com.expensetracker.security.JwtUtil;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -19,9 +20,12 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public User register(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repo.save(user);
     }
 
@@ -31,7 +35,8 @@ public class AuthController {
     Optional<User> existingUser = repo.findByEmail(user.getEmail());
 
     if(existingUser.isPresent() &&
-       existingUser.get().getPassword().equals(user.getPassword())) {
+      passwordEncoder.matches(user.getPassword(),
+                               existingUser.get().getPassword())) {
 
         return jwtUtil.generateToken(existingUser.get().getEmail());
     }

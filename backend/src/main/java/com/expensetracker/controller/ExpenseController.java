@@ -19,7 +19,8 @@ import com.expensetracker.security.JwtUtil;
 import com.expensetracker.model.DashboardSummary;
 import com.expensetracker.model.Expense;
 import com.expensetracker.service.ExpenseService;
-
+import com.expensetracker.model.User;
+import com.expensetracker.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/expenses")
@@ -28,6 +29,8 @@ public class ExpenseController {
 
     @Autowired
     private ExpenseService service; 
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private JwtUtil jwtUtil;// Spring injects ExpenseService object into Controller. service object is used to call methods defined in ExpenseService class.
 

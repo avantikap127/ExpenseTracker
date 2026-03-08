@@ -28,11 +28,12 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody User user) {
 
-        Optional<User> existing = repo.findByEmail(user.getEmail());
+        Optional<User> existingUser = repo.findByEmail(user.getEmail());
 
-        if(existing.isPresent() && existing.get().getPassword().equals(user.getPassword())) {
+        if(existingUser.isPresent() && 
+           existingUser.get().getPassword().equals(user.getPassword())) {
 
-            return jwtUtil.generateToken(existing.get().getEmail());
+            return jwtUtil.generateToken(existingUser.get().getEmail());
         }
 
         return "Invalid Credentials";

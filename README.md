@@ -44,6 +44,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 
 ● Railway (Backend + Database)
 ● Vercel (Frontend)
+
 ---
 
 ##Project Architecture
@@ -95,6 +96,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
                 │ ]                             │
                 └──────────────────────────────┘
 ---
+
 
 
 

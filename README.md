@@ -20,14 +20,11 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 ---
 
 #🛠️ Technologies Used
+ 
 ***Frontend***
-
 React
-
 JavaScript
-
 Axios / Fetch API
-
 HTML & CSS
 
 ***Backend***
@@ -97,6 +94,7 @@ Vercel (Frontend)
                 │ ]                             │
                 └──────────────────────────────┘
 ---
+
 
 
 

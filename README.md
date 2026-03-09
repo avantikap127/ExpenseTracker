@@ -10,11 +10,17 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 ## 🚀 Features
 
 • Add a new expense
+
 • View all expenses
+
 • Filter expenses by category
+
 • Delete an expense
+
 • RESTful API using Spring Boot
+
 • MySQL database integration
+
 • Fully deployed backend with cloud database
 
 ---
@@ -96,6 +102,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
                 │ ]                             │
                 └──────────────────────────────┘
 ---
+
 
 
 

@@ -7,7 +7,7 @@ The application is built using React for the frontend and Spring Boot for the ba
 View the project at: https://expense-tracker-wheat-theta.vercel.app/
 
 ---
-##🚀 Features
+## 🚀 Features
 
 • Add a new expense
 • View all expenses
@@ -19,7 +19,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 
 ---
 
-##🛠️ Technologies Used
+## 🛠️ Technologies Used
  
 ***Frontend***
 
@@ -47,7 +47,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 
 ---
 
-##Project Architecture
+## Project Architecture
 
      ┌────────────────────────────────────────────┐
      │               User (Browser)                │
@@ -96,6 +96,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
                 │ ]                             │
                 └──────────────────────────────┘
 ---
+
 
 
 

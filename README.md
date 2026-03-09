@@ -3,11 +3,11 @@ A full-stack Expense Tracker application that allows users to add, view, filter,
 The application is built using React for the frontend and Spring Boot for the backend, with MySQL as the database.
 
 ---
-# Live Demo
+## Live Demo
 View the project at: https://expense-tracker-wheat-theta.vercel.app/
 
 ---
-#🚀 Features
+##🚀 Features
 
 • Add a new expense
 • View all expenses
@@ -19,34 +19,35 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 
 ---
 
-#🛠️ Technologies Used
+##🛠️ Technologies Used
  
 ***Frontend***
-React
-JavaScript
-Axios / Fetch API
-HTML & CSS
+
+● React
+● JavaScript
+● Axios / Fetch API
+● HTML & CSS
 
 ***Backend***
 
-Spring Boot
+● Spring Boot
 
-Spring Data JPA
+● Spring Data JPA
 
-REST API
+● REST API
 
 ***Database***
 
-MySQL
+● MySQL
 
 ***Deployment***
 
-Railway (Backend + Database)
-
-Vercel (Frontend)
+● Railway (Backend + Database)
+● Vercel (Frontend)
 ---
 
-#Project Architecture
+##Project Architecture
+
      ┌────────────────────────────────────────────┐
      │               User (Browser)                │
      │      ────────────────┬───────────────────   │
@@ -94,6 +95,7 @@ Vercel (Frontend)
                 │ ]                             │
                 └──────────────────────────────┘
 ---
+
 
 
 

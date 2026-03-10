@@ -30,8 +30,11 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
 ***Frontend***
 
 ● React
+
 ● JavaScript
+
 ● Axios / Fetch API
+
 ● HTML & CSS
 
 ***Backend***
@@ -102,6 +105,7 @@ View the project at: https://expense-tracker-wheat-theta.vercel.app/
                 │ ]                             │
                 └──────────────────────────────┘
 ---
+
 
 
 
